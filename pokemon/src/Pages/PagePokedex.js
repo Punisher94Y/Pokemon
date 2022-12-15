@@ -2,6 +2,8 @@ import Header from "../Header";
 import Pokedex from "../components/Cards/CardPokedex";
 import getPokedex from "../components/Pokedex";
 import PokemonSearch from "../components/PokemonSearch";
+import { Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useState, useEffect } from "react";
 
@@ -101,7 +103,9 @@ export default function PageAccueil() {
               {details.types.map((type) => {
                 return <div className="Card_type">{type.type.name}</div>;
               })}
-              <button onClick={putPokeToDB}>Ajouter le pokemon</button>
+              <Button variant="success" onClick={putPokeToDB}>
+                Ajouter le pokemon
+              </Button>
             </div>
           ))}
       </div>
