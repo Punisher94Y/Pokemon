@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import Card from "./components/Card";
-import getPokemon from "./components/Pokemon";
+import Card from "../components/Card";
+import getPokemon from "../components/Pokemon";
+import Header from "../Header";
 
 export default function App() {
   const [pokemon, setPokemon] = useState([]);
@@ -51,16 +52,17 @@ export default function App() {
         });
       })
       .catch((err) => console.log(err));
+    // eslint-disable-next-line
   }, [url.current]);
 
   useEffect(() => {
     loadingPokemon();
+    // eslint-disable-next-line
   }, [pokemon]);
-
-  console.log(pokemonData);
 
   return (
     <div>
+      <Header />
       {pokemonData.map((pokemon, i) => {
         return <Card key={i} pokemon={pokemon} />;
       })}
