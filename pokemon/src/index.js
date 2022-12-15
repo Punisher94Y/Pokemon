@@ -3,8 +3,9 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import "./styles/index.css";
-import App from "./Pages/App";
 import PageAccueil from "./Pages/PageAccueil";
+import PagePokemon from "./Pages/PagePokemon";
+import PagePokedex from "./Pages/PagePokedex";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +13,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PageAccueil />} />
-        <Route path="/allPokemon" element={<App />} />
+        <Route path="/allPokemon" element={<PagePokemon />} />
+        <Route path="/myPokedex" element={<PagePokedex />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
