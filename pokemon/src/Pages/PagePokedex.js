@@ -4,13 +4,17 @@ import getPokedex from "../components/Pokedex";
 import PokemonSearch from "../components/PokemonSearch";
 
 import { useState, useEffect } from "react";
-import getPokemon from "../components/Pokemon";
 
 export default function PageAccueil() {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [details, setDetails] = useState(null);
-  const [addPoke, setAddPoke] = useState();
+  const initialState = {
+    name: String,
+    types: [String],
+    url: String,
+  };
+  const [poke, setPoke] = useState(initialState);
 
   useEffect(() => {
     getPokedex().then((data) => {
@@ -20,6 +24,9 @@ export default function PageAccueil() {
 
   const handleClick = async () => {
     try {
+      if (search.length === 0) {
+        return alert("impossible");
+      }
       const responce = await PokemonSearch.detail(search);
       setDetails(responce);
     } catch (err) {
@@ -32,38 +39,35 @@ export default function PageAccueil() {
     tab.push(data.pokeName);
   });
 
-  let addPokeUrl = `https://pokeapi.co/api/v2/pokemon/${search}`;
-
   useEffect(() => {
-    let tmp = getPokemon(addPokeUrl);
-    setAddPoke(tmp);
+    fetch(`https://pokeapi.co/api/v2/pokemon/${search}`)
+      .then((response) => response.json())
+      .then((pokemon) => {
+        setPoke({
+          name: pokemon.name,
+          types: pokemon.types,
+          url: pokemon.sprites.front_default,
+        });
+      });
   }, [search]);
 
-  fetch(addPokeUrl) //1
-    .then((response) => response.json()) //2
-    .then((pokemon) => {
-      console.log(pokemon.name);
-      console.log(pokemon.types);
-      console.log(pokemon.sprites.front_default);
-    });
-
-  // const putPokeToDB = async () => {
-  //   if (tab.includes(search)) {
-  //     return alert("existe deja");
-  //   } else {
-  //     fetch(addPokeUrl), {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         pokeName: search,
-  //         pokeTypes: ,
-  //         pokeImg: ,
-  //       }),
-  //       headers: { "Content-Type": "application/json" },
-  //     })
-  //       .then(alert("Vous avez ajouté le pokemon dans votre Pokédex"))
-  //       .then(window.location.reload(true));
-  //   }
-  // };
+  const putPokeToDB = async () => {
+    if (tab.includes(search)) {
+      return alert("existe deja");
+    } else {
+      fetch("http://localhost:5000/allPokemon", {
+        method: "POST",
+        body: JSON.stringify({
+          pokeName: poke.name,
+          pokeTypes: poke.types,
+          pokeImg: poke.url,
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(alert("Vous avez ajouté le pokemon dans votre Pokédex"))
+        .then(window.location.reload(true));
+    }
+  };
 
   const delPokedex = async () => {
     fetch("http://localhost:5000/myPokedex", {
@@ -97,7 +101,7 @@ export default function PageAccueil() {
               {details.types.map((type) => {
                 return <div className="Card_type">{type.type.name}</div>;
               })}
-              <button>Ajouter le pokemon</button>
+              <button onClick={putPokeToDB}>Ajouter le pokemon</button>
             </div>
           ))}
       </div>
