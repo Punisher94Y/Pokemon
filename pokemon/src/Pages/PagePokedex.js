@@ -1,5 +1,5 @@
 import Header from "../Header";
-import Pokedex from "../components/Cards/CardPokedex";
+import CardPokedex from "../components/Cards/CardPokedex";
 import getPokedex from "../components/Pokedex";
 import PokemonSearch from "../components/PokemonSearch";
 import { Button } from "react-bootstrap";
@@ -37,6 +37,7 @@ export default function PageAccueil() {
   };
 
   const tab = [];
+  // eslint-disable-next-line
   data.map((data) => {
     tab.push(data.pokeName);
   });
@@ -86,7 +87,7 @@ export default function PageAccueil() {
     <div>
       <Header />
       {data.map((data, i) => {
-        return <Pokedex key={i} data={data} />;
+        return <CardPokedex key={i} data={data} />;
       })}
       <div>
         <h1>Let's look up a pokemon</h1>
@@ -100,8 +101,12 @@ export default function PageAccueil() {
             <div>
               <h1>{details.name}</h1>
               <img src={details.sprites.front_default} alt="" />
-              {details.types.map((type) => {
-                return <div className="Card_type">{type.type.name}</div>;
+              {details.types.map((type, i) => {
+                return (
+                  <div className="Card_type" key={i}>
+                    {type.type.name}
+                  </div>
+                );
               })}
               <Button variant="success" onClick={putPokeToDB}>
                 Ajouter le pokemon

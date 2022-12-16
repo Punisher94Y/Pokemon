@@ -44,6 +44,17 @@ recordRoutes.route("/allPokemon").post(function (req, response) {
 });
 
 // This section will help you delete a record
+recordRoutes.route("/myPokedex/:id").delete((req, response) => {
+  let db_connect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.params.id) };
+  db_connect.collection("MyPokedex").deleteOne(myquery, function (err, obj) {
+    if (err) throw err;
+    console.log("1 pokemon deleted");
+    response.json(obj);
+  });
+});
+
+// This section will help you delete a record
 recordRoutes.route("/myPokedex").delete((req) => {
   let db_connect = dbo.getDb();
   db_connect.collection("MyPokedex").deleteMany();
