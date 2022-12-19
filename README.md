@@ -17,3 +17,4 @@ Faire un `npm install` dans les deux fichiers
 Vous pouvez maintenant faire un `npm start` dans les deux fichiers.
 
 ### Il est important de faire ces étapes, sinon l'utilisation du projet ne sera pas possible.
+# Pokedex
