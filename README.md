@@ -1,12 +1,12 @@
 # Pokedex
 
-Voici mon git sur le projet Pokemon API en ReactJS et Mongodb
+Voici notre git sur le projet Pokemon API en ReactJS et Mongodb
 
 ## Veuillez suivre les étapes suivantes :
 
 ### Faire un git clone :
 
-`git clone https://github.com/Nintando/Pokedex.git`
+`git clone https://github.com/Punisher94Y/Pokemon.git`
 
 ### Aller dans les fichiers :
 
